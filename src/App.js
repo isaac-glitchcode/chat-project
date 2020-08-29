@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
+import socket from './components/socket';
+import Chat from './components/chat';
+
 import './App.css';
 
 function App() {
+  // 
+  const [name, setName] = useState("");
+  const [register, setRegister] = useState(false);
+
+  const signUp = (e) => {
+    e.preventDefault();
+    name !== ""? setRegister(true):setRegister(false);
+    socket.emit('Conected', name)
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        !register &&
+        <form onSubmit={signUp}>
+        <input type="text" value={name} onChange={e => setName(e.target.value)}/>
+        <button>Go to chat</button>
+      </form>
+      }
+      {
+        register &&
+          <Chat name ={name}/>
+      }
     </div>
   );
 }
