@@ -17,7 +17,7 @@ export default function ChatContainer() {
               <div className="panel-body">
                 <ul className="chat">
                   {messages.map((message, index) => {
-                    return <Message messageObj={message} index={index} />;
+                    return <Message messageObj={message} key={index} index={index} />;
                   })}
                 </ul>
               </div>

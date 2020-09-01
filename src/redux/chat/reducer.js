@@ -1,28 +1,35 @@
 const INITIAL_STATE = {
     messages: [],
-    // message:{
-    //     avatar: "http://placehold.it/50/55C1E7/fff&text=U",
-    //     name: "Jack Sparrow",
-    //     date: new Date(),
-    //     content: "",
-    //     showOptions: false
-    // },
-    inputValue: ""
+    inputValue: "",
+    name:"",
+    register: false
   };
   
   const chatReducer = (previousState = INITIAL_STATE, action) => {
     let messages = [];
     switch (action.type) {
+
+      case "INPUT_NAME":
+        return { ...previousState, name: action.payload };
+
+
+
+      case "SET_REGISTER":
+        return {...previousState, register:action.payload}
+
+
+
       case "INPUT_VALUE":
         return { ...previousState, inputValue: action.payload };
   
+
+
+
       case "SEND_MESSAGE":
-        // message = {...previousState.message,content:action.payload}
-        // message = {...previousState.message, content:previousState.inputValue}
-          
+        
         let message = {
-          avatar: "http://placehold.it/50/55C1E7/fff&text=U",
-          name: "Jack Sparrow",
+          avatar: "http://placehold.it/50/55C1E7/fff&text="+action.payload.name.substr(0,1),
+          name: action.payload.name,
           date: new Date(),
           content: action.payload.content,
           showOptions: false
@@ -33,6 +40,10 @@ const INITIAL_STATE = {
           ...previousState,
           messages: [...previousState.messages, message]
         };
+        
+
+
+
       case "SHOW_OPTIONS":
         messages = [...previousState.messages];
         messages[action.payload].showOptions = !messages[action.payload]
@@ -42,11 +53,15 @@ const INITIAL_STATE = {
           messages: messages
         };
   
+
+
       case "DELETE_MESSAGE":
         messages = [...previousState.messages];
         messages.splice(action.payload, 1);
-        return { ...previousState, messages: messages };
+        return { ...previousState, messages: messages, };
   
+      
+
       default:
         return previousState;
     }

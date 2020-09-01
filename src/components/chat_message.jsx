@@ -11,10 +11,12 @@ export default function ChatMessage(props) {
     content,
     showOptions: showOptionsMessage
   } = props.messageObj;
+
+
   return (
-    <li classNameName="left clearfix">
+    <li className="left clearfix">
       <span className="chat-img pull-left">
-        <img src={avatar} alt="User Avatar" class="img-circle" />
+        <img src={avatar} alt="User Avatar" className="img-circle" />
       </span>
       <div className="chat-body clearfix">
         <div className="header">
@@ -40,12 +42,13 @@ export default function ChatMessage(props) {
       {showOptionsMessage ? (
         <div className="options">
           <ul>
-            <li onClick={() => store.dispatch(deleteMessage(props.index))}>
+            <li onClick={(e) => store.dispatch(deleteMessage(props.index))}>
               Borrar mensaje
             </li>
           </ul>
         </div>
-      ) : null}
+      ) : null
+      }
     </li>
-  );
-} 
+)}
+  

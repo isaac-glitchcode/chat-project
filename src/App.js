@@ -1,42 +1,36 @@
-// import React, {useState} from 'react';
-// import socket from './components/socket';
-// import Chat from './components/chat';
 
-// import './App.css';
-
-// function App() {
-//   // 
-//   const [name, setName] = useState("");
-//   const [register, setRegister] = useState(false);
-
-//   const signUp = (e) => {
-//     e.preventDefault();
-//     name !== ""? setRegister(true):setRegister(false);
-//     socket.emit('Conected', name)
-//   }
-  
-//   return (
-//     <div className="App">
-//       {
-//         !register &&
-//         <form onSubmit={signUp}>
-//         <input type="text" value={name} onChange={e => setName(e.target.value)}/>
-//         <button>Go to chat</button>
-//       </form>
-//       }
-//       {
-//         register &&
-//           <Chat name ={name}/>
-//       }
-//     </div>
-//   );
-// }
 import React from "react";
 import ChatContainer from "./components/chat_container";
+import store from "./redux/store";
+import { setInputName, setRegister } from "./redux/chat/actions";
 import "./App.css";
+import socket from './components/socket';
 
 function App() {
-  return <ChatContainer />;
+  const { name, register } = store.getState().ChatReducer;
+
+  const signUp = (e) => {
+    e.preventDefault();
+    console.log(name)
+    name!==""? store.dispatch(setRegister(true)):store.dispatch(setRegister(false));
+    socket.emit('Conected', name)
+  }
+  return (
+        <div className="App">
+          {
+            !register &&
+            <form onSubmit={signUp}>
+            <input type="text" onChange={e => store.dispatch(setInputName(e.target.value))} required/>
+            <button>Go to chat</button>
+          </form>
+          }
+          {
+            register &&
+            <ChatContainer />
+          }
+        </div>
+      );
+  // return ;
 }
 
 export default App;

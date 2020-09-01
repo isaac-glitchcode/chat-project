@@ -5,30 +5,31 @@ import socket from './socket';
 
 
 export default function ChatTextArea() {
-    const { inputValue } = store.getState().ChatReducer;
+    const { inputValue, name } = store.getState().ChatReducer;
     
     useEffect(()=>{
         socket.on('Messages', message =>{
+          console.log(message)
             store.dispatch(sendMessage(message));
-           console.log("Server: ", message.content)
+          //  console.log("Server: ", message.content)
        })
        return () => socket.off();
     },[])
 
   return (
-    <div class="input-group">
+    <div className="input-group">
       <input
         id="btn-input"
         type="text"
-        class="form-control input-sm"
+        className="form-control input-sm"
         placeholder="Type your message here..."
         onChange={(event) => store.dispatch(setInputValue(event.target.value))}
       />
-      <span class="input-group-btn">
+      <span className="input-group-btn">
         <button
-          class="btn btn-warning btn-sm"
+          className="btn btn-primary btn-sm"
           id="btn-chat"
-          onClick={() => (socket.emit('Message',inputValue)
+          onClick={() => (socket.emit('Message',name,inputValue)
           )}
         >
           Send
