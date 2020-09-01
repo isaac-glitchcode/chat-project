@@ -91,4 +91,14 @@
 .menu{
   cursor: pointer;
 } 
-
+.App> form{
+  margin:auto;
+  margin-top:20px;
+  text-align: center;
+}
+.App > form > input{
+  border-radius: 80px;
+}
+.App > form > input:focus{
+  outline: none;
+}
